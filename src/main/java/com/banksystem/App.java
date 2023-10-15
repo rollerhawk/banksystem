@@ -17,6 +17,7 @@ public class App
         Bank bankUK = bankManager.CreateBank("Bank-UK", "Bankstrasse 1, 41882 B");
         Bank bankAU = bankManager.CreateBank("Bank-AU", "Bankstrasse 1, 41552 AC");
 
+        //Add new banks
         bankManager.AddNewBank(bankRFH);
         bankManager.AddNewBank(bankUK);
         bankManager.AddNewBank(bankAU);
