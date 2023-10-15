@@ -13,6 +13,7 @@ public class Konto
   private long kontonummer;
   private double saldo;
   private double dispolimit;
+  private double ueberweisungsLimit;
   private ArrayList<Ueberweisung> ueberweisungshistorie;
 
   //Konto Associations
@@ -22,12 +23,13 @@ public class Konto
   // CONSTRUCTOR
   //------------------------
 
-  public Konto(Bank aBank, long aKontonummer, double aSaldo, Kunde aKunde, double aDispolimit)
+  public Konto(Bank aBank, long aKontonummer, double aSaldo, Kunde aKunde, double aDispolimit, double aUeberweisungsLimit)
   {
     bank = aBank;
     kontonummer = aKontonummer;
     saldo = aSaldo;
     dispolimit = aDispolimit;
+    ueberweisungsLimit = aUeberweisungsLimit;
     ueberweisungshistorie = new ArrayList<Ueberweisung>();
   }
 
@@ -75,16 +77,16 @@ public class Konto
 
   private boolean CheckSaldoEnough(double betrag){
     boolean result = false;    
-    if (this.saldo - betrag >= 0){
+    if (this.saldo - Math.abs(betrag) >= this.dispolimit){
       result = true;
     }
     return result;
   }
 
-  private boolean CheckDispoEnough(double betrag){
-    return betrag <= this.dispolimit;
+  private boolean CheckUeberweisungsLimitOK(double betrag)
+  {
+    return Math.abs(betrag) <= this.ueberweisungsLimit;    
   }
-
 
   private void SaldoAendernUmBetrag(double betrag){
     this.saldo = this.saldo + betrag;
@@ -95,8 +97,16 @@ public class Konto
     if(betrag < 0) {
       //Ueberweisung weil negativer Betrag
       boolean saldoAusreichend = CheckSaldoEnough(betrag);
-      boolean dispoNichtUebeschritten = CheckDispoEnough(betrag);
-      if (saldoAusreichend && dispoNichtUebeschritten){
+      boolean ueberweisungsLimitOk = CheckUeberweisungsLimitOK(betrag);
+      if(!saldoAusreichend){
+        System.out.println("Saldo nicht ausreichend!");
+      }
+
+      if(!ueberweisungsLimitOk){
+        System.out.println("Überweisungslimit überschritten!");
+      }
+
+      if (saldoAusreichend && ueberweisungsLimitOk){
         result = true;
         SaldoAendernUmBetrag(betrag);
       }

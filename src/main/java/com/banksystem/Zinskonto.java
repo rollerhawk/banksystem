@@ -17,7 +17,7 @@ public class Zinskonto extends Konto
 
   public Zinskonto(Bank aBank, long aKontonummer, double aSaldo, Kunde aKunde, double aZinssatz, Intervall aZinsintervall, double aVorgemerkteZinsen)
   {
-    super(aBank, aKontonummer, aSaldo, aKunde);
+    super(aBank, aKontonummer, aSaldo, aKunde, 0,0);
     zinssatz = aZinssatz;
     zinsintervall = aZinsintervall;
     vorgemerkteZinsen = aVorgemerkteZinsen;

@@ -6,7 +6,7 @@ public class Tagesgeldkonto extends Konto {
   //Konstruktor für Tagesgeldkonto
 
     public Tagesgeldkonto(Bank aBank, long aKontonummer, double aSaldo, Kunde aKunde, double tagesDispoLimit) {
-        super(aBank, aKontonummer, aSaldo, aKunde);
+        super(aBank, aKontonummer, aSaldo, aKunde,0,0);
         this.tagesDispoLimit = tagesDispoLimit;
     }
 
